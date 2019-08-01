@@ -1,9 +1,9 @@
 <?php
-
+defined('__BASE_ROOT__') or define('__BASE_ROOT__',__DIR__);
 //require_once  dirname(__DIR__) .'/lib/bootstrap.php';
-require_once  __DIR__ .'/lib/bootstrap.php';
-defined('__BASE__') or define('__BASE__','App\\Http\\');
-define('JWT_SECRET'.'blockchain');
+require_once  __BASE_ROOT__ .'/lib/bootstrap.php';
+defined('__BASE__') or define('__BASE__','App\\Html\\');
+define('JWT_SECRET','blockchain');
 
 use App\Exception\AppException;
 
@@ -47,3 +47,14 @@ try {
     }
 }
 die();
+
+
+$redis = new Redis();
+
+$redis->connect('127.0.0.1', 6379);
+
+$count = $redis->exists('count') ? $redis->get('count') : 1;
+
+echo $count;
+
+$redis->set('count', ++$count);
