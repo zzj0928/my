@@ -1,9 +1,7 @@
 <?php
 defined('__BASE_ROOT__') or define('__BASE_ROOT__',__DIR__);
-//require_once  dirname(__DIR__) .'/lib/bootstrap.php';
 require_once  __BASE_ROOT__ .'/lib/bootstrap.php';
 defined('__BASE__') or define('__BASE__','App\\Html\\');
-define('JWT_SECRET','blockchain');
 
 use App\Exception\AppException;
 
@@ -19,12 +17,13 @@ try {
         $pices[$index] = ucfirst($item);
     }
     $className = trim(__BASE__,'/') . implode('//',$pices);
+    var_dump($className);
     if (!class_exists($className)){
-        throw new AppException('url not found',400);
+        throw new AppException('url not found',401);
     }
     $class = new \ReflectionClass($className);
     if (!$class->hasMethod($action)){
-        throw new AppException('method not implements',400);
+        throw new AppException('method not implements',402);
     }
     $method = $class->getMethod($action);
     if ($method->isPrivate() || $method->isProtected()){
