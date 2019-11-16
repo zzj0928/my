@@ -1,7 +1,10 @@
 <?php
-defined('__BASE_ROOT__') or define('__BASE_ROOT__',__DIR__);
+define('DS', DIRECTORY_SEPARATOR);
+define('URL_DS', '/');
+defined('__BASE_ROOT__') or define('__BASE_ROOT__',__DIR__.DS);
+defined('__BASE__') or define('__BASE__',__BASE_ROOT__.'App'.DS.'Html'.DS);
+
 require_once  __BASE_ROOT__ .'/lib/bootstrap.php';
-defined('__BASE__') or define('__BASE__','App\\Html\\');
 
 use App\Exception\AppException;
 
@@ -11,13 +14,19 @@ try {
     if ($path == null){
         throw new AppException('url not found',400);
     }
-    $pices = explode('/',trim($path,'/'));
+    // var_dump($path);
+    $pices = explode(URL_DS,trim($path,URL_DS));
     $action = array_pop($pices);
     foreach ( $pices as $index=>$item){
         $pices[$index] = ucfirst($item);
     }
-    $className = trim(__BASE__,'/') . implode('//',$pices);
+    //默认首页
+    if (empty($pices)) {
+        // $pices[$index] = ucfirst('index');
+    }
+    $className = __BASE__ . implode(DS,$pices);
     var_dump($className);
+    var_dump(class_exists($className));exit();
     if (!class_exists($className)){
         throw new AppException('url not found',401);
     }
@@ -45,15 +54,3 @@ try {
         echo json_encode($resp);
     }
 }
-die();
-
-
-$redis = new Redis();
-
-$redis->connect('127.0.0.1', 6379);
-
-$count = $redis->exists('count') ? $redis->get('count') : 1;
-
-echo $count;
-
-$redis->set('count', ++$count);

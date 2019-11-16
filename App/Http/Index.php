@@ -8,9 +8,9 @@ use App\Html\HtmlBase;
 class Index extends HtmlBase
 {
 	
-	function __construct(argument)
-	{
-		# code...
-	}
+	function __autoload($class){
+    include $class;
+}
+
 
 }
