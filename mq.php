@@ -63,8 +63,8 @@ class mqClass
 
 }
 $mqClass = new mqClass();
-// $result = $mqClass->sendMessage('email','bbb@163.com'); //
-$result = $mqClass->getMessage('email'); //
-$mqClass->ackMessage($result);	//消费消息
+$result = $mqClass->sendMessage('email','bbb@163.com'); //队列存储
+$result = $mqClass->getMessage('email'); //接收消息
+// $mqClass->ackMessage($result);	//消费消息
 var_dump($result);
 ?>
