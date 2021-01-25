@@ -6,13 +6,16 @@
 <body>
 
 
-<form action="" method="post">
-	<p>单价：<input type="text" name="price"></p>
-	<p>数量：<input type="text" name="count"></p>
-	<p><input type="submit" name="submit" value="计算"><p>
-</form>
 
 
+<table border="1">
+	<tr>
+		<td>买入</td>
+		<td>卖出</td>
+		<td>买卖差</td>
+	</tr>
+	<tr>
+		<td>
 <?php
 /**
  * 交易佣金：万八~千三，买卖双向收取，最低5元，不足5元收5元。（佣金方面需要您和自己的客户经理商量）
@@ -22,7 +25,9 @@
 */
 $price = isset($_POST['price'])?$_POST['price']:19.56;//单价
 $count = isset($_POST['count'])?$_POST['count']:1000;//购买数量
-
+if (empty($price) || empty($count)) {
+	exit();
+}
 $ghf_l = 0.0;
 
 $jyyj_b = 0.00025;//交易佣金买
@@ -51,7 +56,7 @@ echo "<br/>";
 //买入总成本：100000元+300元+2元=100302元(买入10000股，每股10元，所需总资金)
 $chengben = $buy+$ghf+$jyyj+$yhs;
 echo '总成本:'.$chengben;
-echo "<br/><br/>";
+echo "</td><td>";
 
 echo "<p>卖出</p>";
 //买入股票所用金额：10元/股×10000股=100000元;
@@ -75,12 +80,21 @@ echo "<br/>";
 $shouru = $sell-$ghf-$jyyj-$yhs;
 echo '总收入:'.$shouru;
 echo "<br/>";
-
+echo "</td><td>";
 echo "<p>买卖差</p>";
 // $shouyi = $chengben-$shouru;
 $shouyi = bcsub($chengben, $shouru,2);
 echo "同价买卖差：" . $shouyi;
 ?>
+		</td>
+	</tr>
+</table>
+
+<form action="" method="post">
+	<p>单价：<input type="text" name="price" value="<?php echo $price; ?>"></p>
+	<p>数量：<input type="text" name="count" value="<?php echo $count; ?>"></p>
+	<p><input type="submit" name="submit" value="计算"><p>
+</form>
 
 
 </body>
