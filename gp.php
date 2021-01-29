@@ -6,13 +6,11 @@
 <body>
 
 
-
-
 <table border="1">
 	<tr>
 		<td>买入</td>
 		<td>卖出</td>
-		<td>买卖差</td>
+		<td>收益</td>
 	</tr>
 	<tr>
 		<td>
@@ -23,9 +21,11 @@
 　*　过户费：买卖上海股票才收取，每1000股收取1元，低于1000股也收取1元。（ 国家收取）
 　*　开户费：90元，沪A：40元，深A：50元（一般会免开户费用）
 */
-$price = isset($_POST['price'])?$_POST['price']:19.56;//单价
-$count = isset($_POST['count'])?$_POST['count']:1000;//购买数量
-if (empty($price) || empty($count)) {
+$price_b = isset($_POST['price_b'])?$_POST['price_b']:19.56;//单价
+$price_s = isset($_POST['price_s'])?$_POST['price_s']:19.56;//单价
+$count_b = isset($_POST['count_b'])?$_POST['count_b']:1000;//购买数量
+$count_s = isset($_POST['count_s'])?$_POST['count_s']:1000;//购买数量
+if (empty($price_b) || empty($count_b) || empty($price_s) || empty($count_s)) {
 	exit();
 }
 $ghf_l = 0.0;
@@ -37,7 +37,7 @@ $yhs_b = 0;//印花税
 $yhs_s = 0.001;//印花税
 echo "<p>买入</p>";
 //买入股票所用金额：10元/股×10000股=100000元;
-$buy = $price*$count;
+$buy = $price_b*$count_b;
 echo '成本'.$buy;
 echo "<br/>";
 //过户费：0.002%×100000=0.2元;
@@ -60,7 +60,7 @@ echo "</td><td>";
 
 echo "<p>卖出</p>";
 //买入股票所用金额：10元/股×10000股=100000元;
-$sell = $price*$count;
+$sell = $price_s*$count_s;
 echo '成本'.$sell;
 echo "<br/>";
 //过户费：0.002%×100000=0.2元;
@@ -81,18 +81,20 @@ $shouru = $sell-$ghf-$jyyj-$yhs;
 echo '总收入:'.$shouru;
 echo "<br/>";
 echo "</td><td>";
-echo "<p>买卖差</p>";
+echo "<p>收益</p>";
 // $shouyi = $chengben-$shouru;
-$shouyi = bcsub($chengben, $shouru,2);
-echo "同价买卖差：" . $shouyi;
+$shouyi = bcsub($shouru, $chengben,2);
+echo "收益：" . $shouyi;
 ?>
 		</td>
 	</tr>
 </table>
 
 <form action="" method="post">
-	<p>单价：<input type="text" name="price" value="<?php echo $price; ?>"></p>
-	<p>数量：<input type="text" name="count" value="<?php echo $count; ?>"></p>
+	<p>买入单价：<input type="text" name="price_b" value="<?php echo $price_b; ?>"></p>
+	<p>卖出单价：<input type="text" name="price_s" value="<?php echo $price_s; ?>"></p>
+	<p>买入数量：<input type="text" name="count_b" value="<?php echo $count_b; ?>"></p>
+	<p>卖出数量：<input type="text" name="count_s" value="<?php echo $count_s; ?>"></p>
 	<p><input type="submit" name="submit" value="计算"><p>
 </form>
 
