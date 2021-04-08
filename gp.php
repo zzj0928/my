@@ -35,10 +35,9 @@ $jyyj_s = 0.00025;//交易佣金卖
 
 $yhs_b = 0;//印花税
 $yhs_s = 0.001;//印花税
-echo "<p>买入</p>";
 //买入股票所用金额：10元/股×10000股=100000元;
 $buy = $price_b*$count_b;
-echo '成本'.$buy;
+echo '成本:'.$buy;
 echo "<br/>";
 //过户费：0.002%×100000=0.2元;
 $ghf = $ghf_l*$buy;
@@ -58,10 +57,9 @@ $chengben = $buy+$ghf+$jyyj+$yhs;
 echo '总成本:'.$chengben;
 echo "</td><td>";
 
-echo "<p>卖出</p>";
 //买入股票所用金额：10元/股×10000股=100000元;
 $sell = $price_s*$count_s;
-echo '成本'.$sell;
+echo '成本:'.$sell;
 echo "<br/>";
 //过户费：0.002%×100000=0.2元;
 $ghf = $ghf_l*$sell;
@@ -81,7 +79,6 @@ $shouru = $sell-$ghf-$jyyj-$yhs;
 echo '总收入:'.$shouru;
 echo "<br/>";
 echo "</td><td>";
-echo "<p>收益</p>";
 // $shouyi = $chengben-$shouru;
 $shouyi = bcsub($shouru, $chengben,2);
 echo "收益：" . $shouyi;
