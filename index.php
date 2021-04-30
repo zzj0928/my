@@ -1,4 +1,11 @@
 <?php
+
+$uid=(int)' ';
+if ( ! $uid) {
+	echo "string";exit();
+}elseif (empty($uid)) {
+	echo "stringa";exit();
+}
 $a = 35;
 $c = 100;
 $p = $a*$c;
