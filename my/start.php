@@ -3,9 +3,11 @@
 // | Author: zzj <zhangzhanjin@126.com>
 // +----------------------------------------------------------------------
 
-// [ 应用入口文件 ]
+namespace my;
 
-// 定义应用目录
-define('APP_PATH', __DIR__ . '/app/');
-// 加载框架引导文件
-require __DIR__ . '/my/start.php';
+// ThinkPHP 引导文件
+// 1. 加载基础文件
+require __DIR__ . '/base.php';
+
+// 2. 执行应用
+App::run()->send();
